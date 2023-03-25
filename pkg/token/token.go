@@ -45,6 +45,7 @@ const (
 	IF       = "IF"
 	ELSE     = "ELSE"
 	RETURN   = "RETURN"
+	MACRO    = "MACRO"
 )
 
 var keywords = map[string]TokenType{
@@ -55,6 +56,7 @@ var keywords = map[string]TokenType{
 	"if":     IF,
 	"else":   ELSE,
 	"return": RETURN,
+	"macro":  MACRO,
 }
 
 // decide if the token is a keyword or an identifier
