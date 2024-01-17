@@ -10,7 +10,7 @@ func TestQuote(t *testing.T) {
 		input    string
 		expected interface{}
 	}{
-		{`quote(5)`, 5},
+		{`quote(5)`, "5"},
 		{`quote(5 + 8)`, "(5 + 8)"},
 		{`quote(foobar)`, "foobar"},
 		{`quote(foobar + barfoo)`, "(foobar + barfoo)"},
@@ -47,7 +47,7 @@ func TestQuoteUnquote(t *testing.T) {
 		{`quote(unquote(true))`, "true"},
 		{`quote(unquote(true == false))`, "false"},
 		{`quote(unquote(quote(4 + 4)))`, "(4 + 4)"},
-		{`let quotedInfixExpression = quote(4 + 4); quote(unquote(quotedInfixExpression) + 8)`, "(4 + 4)"},
+		{`let quotedInfixExpression = quote(4 + 4); quote(unquote(quotedInfixExpression) + 8)`, "((4 + 4) + 8)"},
 	}
 
 	for _, tt := range tests {

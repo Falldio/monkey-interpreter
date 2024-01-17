@@ -1,7 +1,6 @@
 package evaluator
 
 import (
-	"fmt"
 	"monkey-interpreter/pkg/ast"
 	"monkey-interpreter/pkg/object"
 )
@@ -249,10 +248,6 @@ func isTruthy(obj object.Object) bool {
 	}
 }
 
-func newError(format string, a ...interface{}) *object.Error {
-	return &object.Error{Message: fmt.Sprintf(format, a...)}
-}
-
 func isError(obj object.Object) bool {
 	if obj != nil {
 		return obj.Type() == object.ERROR_OBJ
@@ -295,7 +290,11 @@ func applyFunction(fn object.Object, args []object.Object) object.Object {
 		evaluated := Eval(fn.Body, extendedEnv)
 		return unwrapReturnValue(evaluated)
 	case *object.Builtin:
-		return fn.Fn(args...)
+		if result := fn.Fn(args...); result != nil {
+			return result
+		}
+
+		return NULL
 	default:
 		return newError("not a function: %s", fn.Type())
 	}
